@@ -1,0 +1,110 @@
+openapi: 3.0.1
+info:
+  title: Example API
+  description: Random API.
+  termsOfService: 'https://swagger.io/tools/swaggerhub/'
+  contact:
+    email: pablo.gonzalez.granados@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 2.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: 'http://localhost:8080'
+    description: local enviroment
+tags:
+  - name: examples
+    description: Access to examples api
+paths:
+  /hello/{name}/world:
+    get:
+      tags:
+        - helloWorld
+      summary: hello world example
+      description: just a clasic helloWorld example
+      operationId: helloByName
+      parameters:
+        - name: name
+          in: path
+          description: Pablo, David, Laura...etc
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successfull helloWorld
+          content:
+            text/plain:
+              schema:
+                type: string
+  /people:
+    post:
+      tags:
+        - People
+      summary: add person example
+      description: just a clasic post person example
+      operationId: addPerson
+      requestBody:
+        description: new person
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddPeopleRequest'
+      responses:
+        '200':
+          description: successfull add person
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdResponse'
+    get:
+      tags:
+        - People
+      summary: get all people example
+      description: just a clasic get all people example
+      operationId: getPeople
+      responses:
+        '200':
+          description: successfull get people
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person'
+
+components:
+  schemas:
+    AddPeopleRequest:
+      type: object
+      required: ["name", "lastName", "age"]
+      properties:
+        name:
+          type: string
+        lastName:
+          type: string
+        age:
+          type: integer
+
+    Person:
+      type: object
+      required: ["ID", "name", "lastName", "age"]
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        lastName:
+          type: string
+        age:
+          type: integer
+
+    IdResponse:
+      type: object
+      properties:
+        ID:
+          type: string
